@@ -68,15 +68,11 @@ default_settings = dict(
     load_existing_optimizer_state = True, # else will only load in the model weights. 
     use_top_k=False, 
     use_bias = True, 
-    cnn_model=False,
+    use_output_layer_bias = True, 
     using_vae=False, 
     norm_addresses=False,
     norm_values=False, 
     all_positive_weights = False, 
-    enforce_ewc=False,
-    unique_weight_init = False, 
-    unique_weight_dist = 'uniform', 
-    unique_weight_init_multiplier=1, 
     
     cl_baseline = None, 
     cl_baseline_batches_per_dataset = 5,
@@ -173,6 +169,7 @@ sdm_settings = dict(
     k_approach = "GABA_SWITCH_ACT_BIN", #"FLAT_MASK", "FLAT_SUBTRACT", "LINEAR_DECAY_MASK", "LINEAR_DECAY_SUBTRACT", "GABA_SWITCH"
     # Network deviations from MLP
     use_bias=False,
+    use_output_layer_bias = False, 
     all_positive_weights=True,
     norm_addresses=True,  # L2 norm of neuron addresses and inputs.
     learn_addresses=True,

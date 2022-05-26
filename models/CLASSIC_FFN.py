@@ -16,9 +16,10 @@ class CLASSIC_FFN(BaseModel):
         if params.dropout_prob>0:
             self.fc1_dropout = nn.Dropout(p=params.dropout_prob)
 
-        self.net = nn.Sequential( 
+        '''self.net = nn.Sequential( 
             *[nn.Sequential(nn.Linear(params.nneurons[i], params.nneurons[i+1]), params.act_func) for i in range(len(params.nneurons)-1) ], nn.Linear(params.nneurons[-1], params.output_size)
-        )
+        )'''
+        self.output_layer = nn.Linear(params.nneurons[-1], params.output_size, bias=params.use_output_layer_bias)
 
     ###### FORWARD PASS #####
     def forward(self, x, log_metrics=False, output_model_data=False):
@@ -32,7 +33,8 @@ class CLASSIC_FFN(BaseModel):
             x = self.fc1_dropout(x)
         if output_model_data:
             active_values = torch.clone(x)
-        x = self.net(x)
+        #x = self.net(x)
+        x = self.output_layer(x)
         
         if output_model_data:
             model_data_dict = {

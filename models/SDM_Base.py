@@ -32,14 +32,7 @@ class SDMBase(nn.Module):
 
         self.fc1 = nn.Linear(input_size_flattened, nneurons, bias=params.use_bias)
 
-        if params.unique_weight_init: 
-            
-            self.fc1.weight.data = self.unique_weight_initalizer(self.fc1.weight.data.shape)
-            # The Kaiming default uniform init uniform(-1/sqrt(in_features), 1/sqrt(in_features))
-            # here. Everything will be positive rather than having 50% sparsity. 
-        self.fc1.requires_grad=params.learn_addresses
-
-        self.purkinje_layer = nn.Linear(nneurons, output_size, bias=params.use_bias) 
+        self.purkinje_layer = nn.Linear(nneurons, output_size, bias=params.use_output_layer_bias) 
 
         if params.granule_sparsity_percentage: 
             self.prune_granules()
@@ -57,6 +50,8 @@ class SDMBase(nn.Module):
     def no_epoch_update(self):
         if self.get_curr_ep() > self.last_checked_epoch:
             self.last_checked_epoch = self.get_curr_ep()
+
+            #print(self.purkinje_layer.bias)
             return False
         else: 
             return True

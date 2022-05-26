@@ -45,7 +45,7 @@ This downloads MNIST and CIFAR into the correct directories and splits them into
 
 We already provide ConvMixer embeddings of CIFAR10 that were used in `ConvMixerEmbeddings/CIFAR10`. These are copied into the `data/` directory and then also split using the naive ordinal split and then 4 other random splits. 
 
-The ImageNet32 embeddings are available for download at the following links (they are too large for GitHub): [training data](), [testing data](). Put them inside `data/ConvMixerEmbeddings/ImageNet32/`. 
+The ImageNet32 embeddings are available for download [here](https://drive.google.com/drive/folders/1jmpuQ7o6wWMllfilo-Fh1Q1_szOludMD?usp=sharing) (they are too large for GitHub). Put them inside `data/ConvMixerEmbeddings/ImageNet32/` to be useable.
 
 If you want the raw ImageNet32 pixels you'll need to get approval to download them [here](https://image-net.org/download.php). You will then need to put them into a directory at `data/ImageNet32/` and then run `ImageNet32_torchify.py` inside `py_scripts/`.
 

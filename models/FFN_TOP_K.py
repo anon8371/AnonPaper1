@@ -20,7 +20,7 @@ class FFN_TOP_K(BaseModel):
         self.sdm_module = SimpleNamespace(**self.sdm_module)
 
         self.fc1 = nn.Linear(params.input_size, params.nneurons[0], bias=params.use_bias)
-        self.output_layer = nn.Linear(params.nneurons[0], params.output_size, bias=params.use_bias)
+        self.output_layer = nn.Linear(params.nneurons[0], params.output_size, bias=params.use_output_layer_bias)
 
     ###### FORWARD PASS #####
     def forward(self, x, log_metrics=True, output_model_data=False):

@@ -154,17 +154,15 @@ def get_params_net_dataloader(
                 # this is only false when I am trying to load in and analyze a trained model. 
 
                 if params.model_foundation == SDM:
-                    model.sdm_module.purkinje_layer = nn.Linear(params.nneurons[-1], params.output_size, bias=params.use_bias)
+                    model.sdm_module.purkinje_layer = nn.Linear(params.nneurons[-1], params.output_size, bias=params.use_output_layer_bias)
                 #elif params.model_foundation == ConvMixer:
                 #    nn.Linear(params.hdim, params.output_size)
-                elif params.model_foundation == CLASSIC_FFN:
-                    model.net[-1] = nn.Linear(params.nneurons[-1], params.output_size, bias=params.use_bias)
-                elif params.model_foundation == FFN_TOP_K:
-                    model.output_layer = nn.Linear(params.nneurons[-1], params.output_size, bias=params.use_bias)
+                elif params.model_foundation == CLASSIC_FFN or params.model_foundation == FFN_TOP_K:
+                    model.net[-1] = nn.Linear(params.nneurons[-1], params.output_size, bias=params.use_output_layer_bias)
                 elif params.model_foundation == ConvSDM:
-                    model.sdm_module.purkinje_layer = nn.Linear(params.nneurons[-1], params.output_size, bias=params.use_bias)
+                    model.sdm_module.purkinje_layer = nn.Linear(params.nneurons[-1], params.output_size, bias=params.use_output_layer_bias)
                 else: 
-                    model.net[-1] = nn.Linear(params.nneurons[-1], params.output_size, bias=params.use_bias)
+                    model.net[-1] = nn.Linear(params.nneurons[-1], params.output_size, bias=params.use_output_layer_bias)
 
         if params.load_existing_optimizer_state and "epoch" in full_cpkt:
             params.epochs_to_train_for += params.starting_epoch
