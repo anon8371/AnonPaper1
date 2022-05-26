@@ -3,13 +3,12 @@ from py_scripts.dataset_params import DataSet
 from py_scripts.model_params import ModelStyles
 import sys 
 config_dict={
-    "name": "SI_MEMORY_ContLearnTest_Pretrained_HyperparamSearch",
+    "name": "SI_2_ContLearnTest_Pretrained_HyperparamSearch",
     "metric": {
         "name": "val/accuracy", 
         "goal": "maximize"
     },
     "method": "bayes", # 'random', 'grid', or 'bayes'
-    
 }
 # Careful with value vs values!
 sweep_params = {
@@ -43,20 +42,20 @@ sweep_params = {
     "si_beta": {
         "distribution": "uniform",
         "min":0.01,
-        "max":0.5,
+        "max":0.15,
         #[0.01, 0.03, 0.05, 0.08, 0.1, 0.3, 0.5, 0.8, 1.0]
     },
     "si_importance": {
         "distribution": "uniform",
-        "min":10,
-        "max":10000,
-        #"values": [10, 100, 300, 500, 1000, 2000, 3000, 5000, 10000]
+        "min":1000,
+        "max":30000,
+        #[0.01, 0.03, 0.05, 0.08, 0.1, 0.3, 0.5, 0.8, 1.0]
     },
     
 }
 
 if __name__ == '__main__':
     config_dict["parameters"] = sweep_params
-    sweep_id = wandb.sweep(config_dict, project="Foundational-SDM", entity="kreiman-sdm")
+    sweep_id = wandb.sweep(config_dict, project="Foundational-SDM", entity="YOURENTITY")
     print(sweep_id)
     sys.exit(0)
