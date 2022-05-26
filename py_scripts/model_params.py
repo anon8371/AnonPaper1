@@ -78,16 +78,12 @@ default_settings = dict(
     cl_baseline_batches_per_dataset = 5,
     cl_baseline_batch_size = 512,
 
-    mas_importance=10, 
-    si_importance=0.5, 
-    si_beta = 0.03,
-    ewc_replay_importance=5000, 
-    ewc_replay_beta=0.03, 
-    ewc_online_importance=5000, 
-    ewc_online_beta=0.03, 
-    ewc_memory_importance=100, 
-    ewc_memory_beta=0.08,
-    l2_importance = 0.001,
+    mas_importance=0.5, 
+    si_importance=1500, 
+    si_beta = 0.005,
+    ewc_memory_importance=200, 
+    ewc_memory_beta=0.005,
+    l2_importance = 10,
 
     # continual learning
     epochs_per_dataset = 100,
@@ -236,6 +232,7 @@ conv_sdm_settings =dict(
 active_dendrites_settings = dict(
 
     hidden_sizes=[2048, 2048],
+    validation_neuron_logger=False, 
     kw=True,
     kw_percent_on=0.05,
     dendrite_weight_sparsity=0.0,

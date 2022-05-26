@@ -36,7 +36,7 @@ class ConvSDM(BaseModel):
         )
         self.avgpool = nn.AdaptiveAvgPool2d((1,1))
         if params.use_top_k:
-            self.sdm_module = SDMBase(params, params.hdim, params.nneurons[0], params.output_size, self.log_wandb, self.return_curr_ep, self.unique_weight_initalizer )
+            self.sdm_module = SDMBase(params, params.hdim, params.nneurons[0], params.output_size, self.log_wandb, self.return_curr_ep,  log_neuron_activations= params.log_for_dead_neurons)
         else:
             self.sdm_module = SDM_Module_ReLU_Replacement(params.hdim, params.nneurons[0], params.output_size)
 

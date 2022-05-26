@@ -8,6 +8,7 @@ import CIFAR10_torchify
 import CIFAR10_cached_data_split
 import CIFAR10_cached_data_split_randomize
 import compute_context_vector_MNIST 
+import processing_MNIST 
 from torchvision.datasets import MNIST, CIFAR10
 
 if __name__ == '__main__':
@@ -20,6 +21,9 @@ if __name__ == '__main__':
         data_func(data_path, train=True, download=True)
         data_func(data_path, train=False,download=True)
 
+    # process the MNIST data
+    processing_MNIST.process_MNIST()
+    
     split_dir = f'{data_path}splits/'
     if not os.path.isdir(split_dir):
         os.mkdir(split_dir)

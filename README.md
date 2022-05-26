@@ -31,6 +31,8 @@ cd nta/
 git clone https://github.com/numenta/htmpapers
 cd htmpapers/biorxiv/going_beyond_the_point_neuron
 pip install -r requirements.txt
+git checkout c59a339a05478f5ae76fc6243c553ef125c0c51a
+cd ../../../../
 ```
 
 ## 4. Set up the datasets: 

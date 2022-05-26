@@ -8,7 +8,7 @@ import wandb
 from py_scripts.dataset_params import *
 from py_scripts.combine_params import *
 
-model_style = ModelStyles.SDM
+model_style = ModelStyles.SDM #ACTIVE_DENDRITES #FFN_TOP_K #CLASSIC_FFN #SDM
 dataset = DataSet.SPLIT_MNIST
 
 load_path = None
@@ -19,6 +19,8 @@ extras = dict(
     epochs_per_dataset = 10,
     k_min=1, 
     num_binary_activations_for_gaba_switch = 100000,
+    #cl_baseline="MAS", # 'MAS', 'EWC-Memory', 'SI', 'L2', '
+    #dropout_prob = 0.1,
 )
 
 if load_path:
