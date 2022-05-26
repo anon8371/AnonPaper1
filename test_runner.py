@@ -26,7 +26,7 @@ if load_path:
 
 model_params, model, data_module = get_params_net_dataloader(model_style, dataset, load_from_checkpoint=load_path, **extras)
 
-wandb_logger = WandbLogger(project="Foundational-SDM", entity="kreiman-sdm", save_dir="wandb_Logger/")
+wandb_logger = None #WandbLogger(project="SDMContLearning", entity="YOURENTITY", save_dir="wandb_Logger/")
 model_params.logger = wandb_logger
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -44,10 +44,9 @@ else:
     fit_load_state = None
 
 callbacks = []
+# by default we will not save the model being trained unless it is in the continual learning setting. 
 if model_params.investigate_cont_learning: 
-    #import ipdb
-    #ipdb.set_trace()
-    num_checkpoints_to_keep = -1 # means all of them. 
+    num_checkpoints_to_keep = -1 
     model_checkpoint_obj = pl.callbacks.ModelCheckpoint(
         every_n_epochs = model_params.checkpoint_every_n_epochs,
         save_top_k = num_checkpoints_to_keep,
@@ -58,20 +57,16 @@ else:
     checkpoint_callback = False
 
 temp_trainer = pl.Trainer(
-        #precision=16, 
-        
         logger=model_params.logger,
         max_epochs=model_params.epochs_to_train_for,
         check_val_every_n_epoch=1,
         num_sanity_val_steps = False,
         enable_progress_bar = True,
         gpus=gpu, 
-        #gradient_clip_val = model_params.gradient_clip,
         callbacks = callbacks,
-        checkpoint_callback=checkpoint_callback, # dont save these test models. 
+        checkpoint_callback=checkpoint_callback, 
         reload_dataloaders_every_n_epochs=model_params.epochs_per_dataset, 
-        #limit_train_batches=2,
-        #profiler="simple" # if on then need to set epochs_to_train_for to a v low score.
+        
         )
-temp_trainer.fit(model, data_module)#, ckpt_path=False)#fit_load_state)
+temp_trainer.fit(model, data_module)
 wandb.finish()

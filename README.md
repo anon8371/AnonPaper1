@@ -50,11 +50,19 @@ The ImageNet32 embeddings are available for download at the following links (the
 If you want the raw ImageNet32 pixels you'll need to get approval to download them [here](https://image-net.org/download.php). You will then need to put them into a directory at `data/ImageNet32/` and then run `ImageNet32_torchify.py` inside `py_scripts/`.
 
 
-## 5. Run `python test_runner.py` that will by default run an SDM model on Split MNIST. 
+## 5. Setup Wandb
+
+Make an account [here](https://wandb.ai/home) and put the details into `test_runner.py` under `wandb_logger=`. 
+
+Otherwise, currently only the validation accuracy for each epoch will be printed out during training. 
+
+## 6. Run `python test_runner.py` that will by default run an SDM model on Split MNIST. 
 
 See `exp_commands/` for all parameters used to run all of our experiments. 
 
 You can put these parameters into `test_runner.py` to run them and fill in `load_path=` with a trained model. To reproduce all of our results we recommend using a job parallelizer like Ray or SLURM to run each experiment as a different job. 
+
+If you want your model runs to be saved change `checkpoint_callback = False` on line 57 to `True`. Otherwise, only the continual learning models make while investigating continual learning will be saved out. 
 
 # Code Base Overview
 

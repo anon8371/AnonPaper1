@@ -75,7 +75,8 @@ class BaseModel(pl.LightningModule):
             dic['epoch'] = self.curr_ep
             wandb.log(dic,commit=commit)
         else: 
-            print( dic)
+            pass
+            #print( dic)
 
     ###### OPTIMIZER #######
     def configure_optimizers(self, verbose=False):
@@ -117,7 +118,8 @@ class BaseModel(pl.LightningModule):
     ###### TRAIN + VAL #######
     def on_train_start(self, *args):
         # Need to update params in cases where loading in model. 
-        self.params.logger.experiment.config.update(self.params.__dict__, allow_val_change=True) 
+        if self.params.logger:
+            self.params.logger.experiment.config.update(self.params.__dict__, allow_val_change=True) 
 
         # annoying this base model is called before anything else so need to init this here. 
         self.init_cl_baselines()
@@ -267,6 +269,9 @@ class BaseModel(pl.LightningModule):
         for k,v in self.val_loggers.items():
             # getting rid of the normalizers.
             self.val_loggers[k] = v[0]/v[1]
+
+        if self.params.logger is None: 
+            print(self.val_loggers)
         self.log_wandb(copy.deepcopy(self.val_loggers))
             
         if self.params.validation_neuron_logger:
