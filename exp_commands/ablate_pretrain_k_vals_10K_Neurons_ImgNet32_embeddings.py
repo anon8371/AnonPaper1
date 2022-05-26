@@ -18,8 +18,8 @@ if 'exp_commands' in os.getcwd():
 """
 
 settings_for_all = dict(
-    epochs_to_train_for = 300, #!!
-    dataset = DataSet.Cached_ConvMixer_WTransforms_ImageNet32_ImageNet32, #Cached_AlexNet_NoAugs_ImageNet32,
+    epochs_to_train_for = 300, 
+    dataset = DataSet.Cached_ConvMixer_ImageNet32, 
     classification=True,
     adversarial_attacks=False, 
     validation_neuron_logger = True,

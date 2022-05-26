@@ -14,12 +14,12 @@ if 'exp_commands' in os.getcwd():
 
 """
 Training default SDM model vs ReLU vs SDM linear decay vs TopK in the continual learning setting to see exactly how it avoids
-catastrophic forgetting!
+    catastrophic forgetting by logging lots of things!
 """
 
 settings_for_all = dict(
-    epochs_to_train_for = 1500, #!!
-    dataset = DataSet.SPLIT_Cached_ConvMixer_WTransforms_ImageNet32_CIFAR10, #Cached_AlexNet_NoAugs_ImageNet32,
+    epochs_to_train_for = 1500, 
+    dataset = DataSet.SPLIT_Cached_ConvMixer_CIFAR10, 
     classification=True,
     adversarial_attacks=False, 
     epochs_per_dataset = 300,

@@ -17,8 +17,8 @@ Pretraining with different GABA switch values. Using even smaller values now!!
 """
 
 settings_for_all = dict(
-    epochs_to_train_for = 30, #!!
-    dataset = DataSet.Cached_ConvMixer_WTransforms_ImageNet32_ImageNet32, #Cached_AlexNet_NoAugs_ImageNet32,
+    epochs_to_train_for = 30,
+    dataset = DataSet.Cached_ConvMixer_ImageNet32,
     classification=True,
     adversarial_attacks=False, 
     validation_neuron_logger = True,
@@ -26,7 +26,7 @@ settings_for_all = dict(
     log_receptive_fields = False,
 )
 
-name_suffix = "_GABASwitchAblation_Pretrains_ConvMixer_WTransforms_ImageNet32_CIFAR10" 
+name_suffix = "_GABASwitchAblation_Pretrains_ConvMixer_ImageNet32" 
 
 exp_list = [
 

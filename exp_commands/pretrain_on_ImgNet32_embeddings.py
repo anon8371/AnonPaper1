@@ -15,13 +15,13 @@ if 'exp_commands' in os.getcwd():
 ########### EXPERIMENTS TO RUN ##############
 
 """
-Only the positive weights model!
+Pretraining all models on ImageNet32 Convmixer embeddings.
 """
 
 settings_for_all = dict(
-    epochs_to_train_for = 300, #!!
+    epochs_to_train_for = 300, 
     num_binary_activations_for_gaba_switch=500000,
-    dataset = DataSet.Cached_ConvMixer_WTransforms_ImageNet32_ImageNet32, #Cached_AlexNet_NoAugs_ImageNet32,
+    dataset = DataSet.Cached_ConvMixer_ImageNet32, 
     classification=True,
     adversarial_attacks=False, 
     epochs_per_dataset = 500,

@@ -16,11 +16,11 @@ if 'exp_commands' in os.getcwd():
 """
 Testing all models and random seeds directly on the embeddings. No pretrain.
 
-Really need to Tune the GABA switch here. 
+GABA Switch is tuned to terminate within the first task. 
 """
 
 settings_for_all = dict(
-    epochs_to_train_for = 10000, #!!
+    epochs_to_train_for = 10000, 
     classification=True,
     adversarial_attacks=False, 
     epochs_per_dataset = 2000,
@@ -84,9 +84,9 @@ for rand_seed in [None, 3, 15, 27, 97]:
         temp_exp = copy.deepcopy(e)
 
         if rand_seed is not None: 
-            temp_exp['dataset'] = DataSet[DataSet.SPLIT_Cached_ConvMixer_WTransforms_ImageNet32_CIFAR10.name +f"_RandSeed_{rand_seed}"]
+            temp_exp['dataset'] = DataSet[DataSet.SPLIT_Cached_ConvMixer_CIFAR10.name +f"_RandSeed_{rand_seed}"]
         else: 
-            temp_exp['dataset'] = DataSet.SPLIT_Cached_ConvMixer_WTransforms_ImageNet32_CIFAR10
+            temp_exp['dataset'] = DataSet.SPLIT_Cached_ConvMixer_CIFAR10
 
         temp_exp['test_name'] = temp_exp['test_name']+f"_RS_{rand_seed}"
 

@@ -13,12 +13,12 @@ if 'exp_commands' in os.getcwd():
 ########### EXPERIMENTS TO RUN ##############
 
 """
-Pretraining ReLU models with different learning rates and also L2 norm, dropout, and EWC (using the hyperparameters found)
+Testing continual learning with loads of different k values for SDM. 
 """
 
 settings_for_all = dict(
-    epochs_to_train_for = 2500, #!!
-    dataset = DataSet.SPLIT_Cached_ConvMixer_WTransforms_ImageNet32_CIFAR10, 
+    epochs_to_train_for = 2500, 
+    dataset = DataSet.SPLIT_Cached_ConvMixer_CIFAR10, 
     classification=True,
     adversarial_attacks=False, 
     epochs_per_dataset = 500,

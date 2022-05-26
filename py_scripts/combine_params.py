@@ -69,7 +69,7 @@ def get_params_net_dataloader(
 
     # set up here so it applies automatically and is not over written by any loaded in model (custom kwards overwrites the loaded in model parameters.)
 
-    #TODO: this is kind of hacky but helps ensure no errors during the run because I forget to set the wrong master parameters.
+    #NOTE: this is kind of hacky but helps ensure no errors during the run because I forget to set the wrong master parameters.
     if "CachedOutputs" in params['dataset_path_suffix']:
         params['log_receptive_fields'] = False
         params['log_model_predictions'] = False
@@ -78,10 +78,8 @@ def get_params_net_dataloader(
     custom_kwargs["dataset_str"] = dataset.name
 
     # Running this first and then overwriting with it again later!!!
-    # Really need to figure this out better. 
     #-----------------
      # implement custom_kwargs and do so before set the model and dataset.
-    # THIS NEEDS TO BE THE LAST THING THAT IS MODIFIED
     if verbose: 
         print("Custom args are:", custom_kwargs)
     for key, value in custom_kwargs.items():
@@ -99,24 +97,8 @@ def get_params_net_dataloader(
         print(load_from_checkpoint, os.getcwd())
         full_cpkt = torch.load(load_from_checkpoint, map_location=params["device"])
 
-        # all of the unique load in scenarios:::
-        if model_style is ModelStyles.ALEX_SDM and params['alex_net_freeze_layer_swap']:
-            pass
-        # conv net. pure reload but using the limited model state
-        elif model_style is ModelStyles.CONVNEXT: 
-            pass 
-        elif model_style is ModelStyles.RESNET50:
-            pass 
-        elif model_style is ModelStyles.ADD_SECOND_LAYER_SDM:
-            # TODO: this will throw an error if I just want a pure reload of the model
-            assert full_cpkt['hyper_parameters']['model_style'] is ModelStyles.SDM, "Trying to add a second layer to SDM. Loaded in model needs to be SDM original "
-            params = reload_params_from_saved_model(full_cpkt, params, custom_kwargs, dataset_params )
-            # this is the only modification to these settings
-            params['purkinje_layer']=True
-            # if it is then introduce the second layer the new parameters
-        else: 
-            # pure reload 
-            params = reload_params_from_saved_model(full_cpkt, params, custom_kwargs, dataset_params )
+        # pure reload 
+        params = reload_params_from_saved_model(full_cpkt, params, custom_kwargs, dataset_params )
 
     # ensure the device is not overwritten no matter what. 
     params["device"] = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -124,7 +106,7 @@ def get_params_net_dataloader(
         
     # general logic based processing: 
     if params['continual_learning']:
-        #TODO: this is a bug but it is one I need to account for for now!!! 
+        #TODO: this is a bug () but it is one I need to account for for now!!! 
         params['check_val_every_n_epoch'] = 1
         
         if not params['investigate_cont_learning']:
@@ -152,62 +134,7 @@ def get_params_net_dataloader(
         if verbose: 
             print("!!! Loading in model with checkpoint saved parameters!!!")
 
-        if model_style is ModelStyles.ALEX_SDM and params.alex_net_freeze_layer_swap:
-                # take the AlexNet Model. Load it in. Then make an SDM Model. And replace the features module with the original. Then freeze it. 
-                params.load_existing_optimizer_state = False
-                # use the relative start of the epochs_to_train_for. 
-                params.epoch_relative_to_training_restart = True
-                # TODO: surely there is a cleaner way to do this? 
-                for k, v in full_cpkt['state_dict'].items(): 
-                    if "features" in k: 
-                        lind = int(k.split("features.")[1].split(".")[0])
-                        # need to get rid of the other parts of the model. if it is a relu or maxpool2d then increment a counter for the layers seen
-                        if 'weight' in k: 
-                            model.features[lind].weight.data = v.to(params.device)
-                        elif 'bias' in k: 
-                            model.features[lind].bias.data = v.to(params.device)
-                # freezing features part of the model
-                for f in model.features:
-                    if "weight" in f.__dict__['_parameters']:
-                        f.weight.requires_grad=False
-                        f.bias.requires_grad=False
-                    f.training=False
-
-        # conv net. pure reload but using the limited model state
-        elif model_style is ModelStyles.CONVNEXT: 
-            # no hyperparams etc. just the model weights based loader. 
-            model = model.load_from_checkpoint(
-            load_from_checkpoint, params=params, map_location=params.device
-            ) 
-            # re init the last layer with the correct number of parameters. 
-            model.re_init_output_head(params.output_size, params.dims)
-        elif model_style is ModelStyles.ADD_SECOND_LAYER_SDM:
-            # need to explicitly update weights
-            print("LOADING IN ONLY SPECIFIC LAYERS AND AVOIDING OPTIMIZER RESTART!")
-            model.fc1.weight.data = full_cpkt['state_dict']['fc1.weight'].to(params.device)
-            params.load_existing_optimizer_state = False
-        elif model_style is ModelStyles.RESNET50: 
-            # no hyperparams etc. just the model weights based loader. 
-            model.load_state_dict(full_cpkt) 
-            params.load_existing_optimizer_state = False
-        elif model_style is ModelStyles.SDM_MIXER and params.activation_type=="SDM":
-            if params.swap_in_sdm_modules:
-                # Think I am losing the batch norms and the second CNN layers of course. 
-                print("Loading in SDM Mixer and doing model surgery on it by inserting in SDM modules")
-                for n, p in model.named_parameters():
-                    if 'fc1' in n or 'purkinje_layer' in n: 
-                        # ensures wont reload these if starting with a different SDM model
-                        continue
-                    if n in full_cpkt['state_dict'].keys():
-                        p = full_cpkt['state_dict'][n]
-                        print(f"Loaded in {n}")
-                    else: 
-                        print(f"Didn't Load {n}")
-                params.load_existing_optimizer_state = False
-                params.epoch_relative_to_training_restart = True # dont want the K value to be affected. 
-        else: 
-            # just the model, no state dict! This is true for the pretrained ConvNeXT architecture
-            model.load_state_dict( full_cpkt['state_dict'])
+        model.load_state_dict( full_cpkt['state_dict'])
 
         # needs to increase the number of epochs_to_train_for further. 
         #params.epochs_to_train_for += custom_kwargs['epochs_to_train_for']
@@ -234,8 +161,6 @@ def get_params_net_dataloader(
                     model.net[-1] = nn.Linear(params.nneurons[-1], params.output_size, bias=params.use_bias)
                 elif params.model_foundation == FFN_TOP_K:
                     model.output_layer = nn.Linear(params.nneurons[-1], params.output_size, bias=params.use_bias)
-                elif params.model_foundation == SDM_Mixer:
-                    model.model[-1] = nn.Linear(model.model[-1].weight.shape[1], params.output_size)
                 elif params.model_foundation == ConvSDM:
                     model.sdm_module.purkinje_layer = nn.Linear(params.nneurons[-1], params.output_size, bias=params.use_bias)
                 else: 

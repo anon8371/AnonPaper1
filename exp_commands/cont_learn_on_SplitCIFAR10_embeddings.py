@@ -14,11 +14,11 @@ if 'exp_commands' in os.getcwd():
 ########### EXPERIMENTS TO RUN ##############
 
 """
-All seeds and the best models. SuperLong Cifar10 testing. All pos weights models not accounted for in the negative weight runs. 
+All seeds and the best models plus all baselines. SuperLong Cifar10 testing. All pos weights models not accounted for in the negative weight runs. 
 """
 
 settings_for_all = dict(
-    epochs_to_train_for = 10000, #!!
+    epochs_to_train_for = 10000, 
     classification=True,
     adversarial_attacks=False, 
     epochs_per_dataset = 2000,
@@ -37,27 +37,9 @@ og_exp_list = [
     dict(
         model_style= ModelStyles.SDM,
         test_name= "SDM_10K",
-        
         nneurons=[10000],
         load_path = "experiments/ConvMixer_ImageNet32_ImageNet32_ContLearnStarters/SDM_PosWeights_10KNeurons_ContinualLearningPretrains_ConvMixer_WTransforms_ImageNet32_ImageNet32",
         k_approach = "GABA_SWITCH_ACT_BIN", 
-    ),
-    dict(
-        model_style= ModelStyles.SDM,
-        test_name= "SDM_EWC_10K",
-        nneurons=[10000],
-        enforce_ewc=True,
-        ewc_beta=0.03,
-        ewc_importance=2000,
-        load_path = "experiments/ConvMixer_ImageNet32_ImageNet32_ContLearnStarters/SDM_PosWeights_10KNeurons_ContinualLearningPretrains_ConvMixer_WTransforms_ImageNet32_ImageNet32",
-    ),
-    dict(
-        model_style= ModelStyles.SDM,
-        test_name= "SDM_EWC",
-        enforce_ewc=True,
-        ewc_beta=0.03,
-        ewc_importance=2000,
-        load_path="experiments/ConvMixer_ImageNet32_ImageNet32_ContLearnStarters/SDM_PosWeights_ContinualLearningPretrains_ConvMixer_WTransforms_ImageNet32_ImageNet32",
     ),
 
     dict(
@@ -226,9 +208,6 @@ og_exp_list = [
         load_path="experiments/Baseline_Ablations_ConvMixer_ImgNet32_ImgNet32_ContLearnStarters/EWC_SGD_Baselines_Ablation_PRETRAIN_ConvMixer_WTransforms_ImageNet32_ImageNet32",
     ),
 
-
-
-
     dict(
         model_style= ModelStyles.CLASSIC_FFN,
         test_name= "SI_SGD_10K",
@@ -262,9 +241,9 @@ for rand_seed in [None, 3, 15, 27, 97]:
         temp_exp = copy.deepcopy(e)
 
         if rand_seed is not None: 
-            temp_exp['dataset'] = DataSet[DataSet.SPLIT_Cached_ConvMixer_WTransforms_ImageNet32_CIFAR10.name +f"_RandSeed_{rand_seed}"]
+            temp_exp['dataset'] = DataSet[DataSet.SPLIT_Cached_ConvMixer_CIFAR10.name +f"_RandSeed_{rand_seed}"]
         else: 
-            temp_exp['dataset'] = DataSet.SPLIT_Cached_ConvMixer_WTransforms_ImageNet32_CIFAR10
+            temp_exp['dataset'] = DataSet.SPLIT_Cached_ConvMixer_CIFAR10
 
         temp_exp['test_name'] = temp_exp['test_name']+f"_RS_{rand_seed}"
 

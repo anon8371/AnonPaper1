@@ -17,8 +17,8 @@ Pretraining all of the main models on raw imagenet.
 """
 
 settings_for_all = dict(
-    epochs_to_train_for = 100, #!!
-    dataset = DataSet.ImageNet32, #Cached_AlexNet_NoAugs_ImageNet32,
+    epochs_to_train_for = 100, 
+    dataset = DataSet.ImageNet32, 
     classification=True,
     adversarial_attacks=False, 
     validation_neuron_logger = True,

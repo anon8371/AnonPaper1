@@ -13,11 +13,11 @@ if 'exp_commands' in os.getcwd():
 ########### EXPERIMENTS TO RUN ##############
 
 """
-TESTING FOR DOUBLE THE DURATION all of the main models trained on raw imagenet now on CIFAR10 splits. 
+Trained on raw imagenet now testing on CIFAR10 splits. 
 """
 
 settings_for_all = dict(
-    epochs_to_train_for = 10000, #!!
+    epochs_to_train_for = 10000, 
     epochs_per_dataset = 2000,
     classification=True,
     adversarial_attacks=False, 
@@ -73,10 +73,6 @@ og_exp_list = [
         k_approach="GABA_SWITCH_ACT_BIN", 
         load_path="experiments/ImageNet32_Raw_Pretrains/SDM_k=1_LargerGABA_Pretrains_Raw_ImageNet32", 
     ), 
-
-    
-   
-    
 ]
 
 exp_list = []

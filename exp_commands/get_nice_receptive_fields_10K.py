@@ -13,12 +13,12 @@ if 'exp_commands' in os.getcwd():
 ########### EXPERIMENTS TO RUN ##############
 
 """
-Getting nice receptive fields for the 10K neuron model. 
+Getting nice receptive fields for the 10K neuron model. And for ReLU Baselines as a comparison. 
 """
 
 settings_for_all = dict(
-    epochs_to_train_for = 1000, #!!
-    dataset = DataSet.CIFAR10, #Cached_AlexNet_NoAugs_ImageNet32,
+    epochs_to_train_for = 1000, 
+    dataset = DataSet.CIFAR10, 
     classification=True,
     adversarial_attacks=False, 
     validation_neuron_logger = True,
@@ -29,11 +29,10 @@ settings_for_all = dict(
     count_dead_train_neurons = True, 
 )
 
-# LogGrads
 name_suffix = "_NiceReceptiveFields_10MSwitch_RawCIFAR_StaleGradients_Longer" 
 
-"""
-#####
+
+exp_list = [
 
     dict(
         model_style= ModelStyles.SDM,
@@ -53,7 +52,6 @@ name_suffix = "_NiceReceptiveFields_10MSwitch_RawCIFAR_StaleGradients_Longer"
         all_positive_weights = True, 
     ),
 
-    #####
     dict(
         model_style= ModelStyles.SDM,
         test_name= "SDM_SGD_lr=0.2_NegWeights",
@@ -79,11 +77,6 @@ name_suffix = "_NiceReceptiveFields_10MSwitch_RawCIFAR_StaleGradients_Longer"
         lr=0.03,
         all_positive_weights = False, 
     ),
-
-"""
-
-
-exp_list = [
     
     dict(
         model_style= ModelStyles.CLASSIC_FFN,

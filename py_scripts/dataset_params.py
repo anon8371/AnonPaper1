@@ -2,7 +2,6 @@ import copy
 from enum import Enum, auto
 from types import SimpleNamespace
 from typing import List
-
 import numpy as np
 import torch
 from models import *

@@ -13,12 +13,12 @@ if 'exp_commands' in os.getcwd():
 ########### EXPERIMENTS TO RUN ##############
 
 """
-Oracle Model
+Oracle Model training. Swap out the dataset to get different oracle results. 
 """
 
 settings_for_all = dict(
-    epochs_to_train_for = 300, #!!
-    dataset = DataSet.Cached_ConvMixer_WTransforms_ImageNet32_CIFAR10, #Cached_AlexNet_NoAugs_ImageNet32,
+    epochs_to_train_for = 300, 
+    dataset = DataSet.Cached_ConvMixer_CIFAR10,
     classification=True,
     adversarial_attacks=False, 
     validation_neuron_logger = True,

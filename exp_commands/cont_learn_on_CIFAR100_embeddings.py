@@ -14,14 +14,14 @@ if 'exp_commands' in os.getcwd():
 ########### EXPERIMENTS TO RUN ##############
 
 """
-Testing CIFAR100
+Testing CIFAR100. Using ImageNet32 pretrain. Using ConvMixer embeddings. 
 """
 
 settings_for_all = dict(
-    epochs_to_train_for = 25000, #!!
+    epochs_to_train_for = 25000, 
     classification=True,
     adversarial_attacks=False, 
-    dataset = DataSet.SPLIT_Cached_ConvMixer_WTransforms_ImageNet32_CIFAR100,
+    dataset = DataSet.SPLIT_Cached_ConvMixer_CIFAR100,
     epochs_per_dataset = 500,
     validation_neuron_logger = True,
     log_metrics = True,
@@ -35,31 +35,6 @@ settings_for_all = dict(
 )
 
 name_suffix = "_TEST_CIFAR100" 
-
-"""
-dict(
-        model_style= ModelStyles.FFN_TOP_K,
-        test_name= "TopK",
-        load_path = "experiments/ConvMixer_ImageNet32_ImageNet32_ContLearnStarters/TopKDefault_ContinualLearningPretrains_ConvMixer_WTransforms_ImageNet32_ImageNet32", 
-    ),
-
-    dict(
-        model_style= ModelStyles.CLASSIC_FFN,
-        test_name= "ReLU_SGD",
-        load_path = "experiments/ConvMixer_ImageNet32_ImageNet32_ContLearnStarters/ReLU_SGD_10KNeurons_ContinualLearningPretrains_ConvMixer_WTransforms_ImageNet32_ImageNet32",
-    ),
-
-    dict(
-        model_style= ModelStyles.CLASSIC_FFN,
-        test_name= "SI",
-        cl_baseline = "SI",
-        si_importance=1350, 
-        si_beta = 0.02,
-        load_path = "experiments/ConvMixer_ImageNet32_ImageNet32_ContLearnStarters/ReLU_SGDM_10KNeurons_ContinualLearningPretrains_ConvMixer_WTransforms_ImageNet32_ImageNet32",
-    ),
-
-"""
-
 
 exp_list = [
 
@@ -136,6 +111,27 @@ exp_list = [
         num_binary_activations_for_gaba_switch=500000,
         k_min=1,
         load_path="experiments/ConvMixer_ImageNet32_ImageNet32_ContLearnStarters/SDM_k=1_PosWeights_ContinualLearningPretrains_ConvMixer_WTransforms_ImageNet32_ImageNet32",
+    ),
+
+    dict(
+        model_style= ModelStyles.FFN_TOP_K,
+        test_name= "TopK",
+        load_path = "experiments/ConvMixer_ImageNet32_ImageNet32_ContLearnStarters/TopKDefault_ContinualLearningPretrains_ConvMixer_WTransforms_ImageNet32_ImageNet32", 
+    ),
+
+    dict(
+        model_style= ModelStyles.CLASSIC_FFN,
+        test_name= "ReLU_SGD",
+        load_path = "experiments/ConvMixer_ImageNet32_ImageNet32_ContLearnStarters/ReLU_SGD_10KNeurons_ContinualLearningPretrains_ConvMixer_WTransforms_ImageNet32_ImageNet32",
+    ),
+
+    dict(
+        model_style= ModelStyles.CLASSIC_FFN,
+        test_name= "SI",
+        cl_baseline = "SI",
+        si_importance=1350, 
+        si_beta = 0.02,
+        load_path = "experiments/ConvMixer_ImageNet32_ImageNet32_ContLearnStarters/ReLU_SGDM_10KNeurons_ContinualLearningPretrains_ConvMixer_WTransforms_ImageNet32_ImageNet32",
     ),
 
     

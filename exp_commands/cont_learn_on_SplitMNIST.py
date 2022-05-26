@@ -18,11 +18,11 @@ SplitMNIST
 
 Testing all models and random seeds directly on the embeddings. No pretrain.
 
-Really need to Tune the GABA switch here. 
+Really need to Tune the GABA switch here so that it terminates and Top-K is fully implemented within the first task. 
 """
 
 settings_for_all = dict(
-    epochs_to_train_for = 2500, #!!
+    epochs_to_train_for = 2500, 
     classification=True,
     adversarial_attacks=False, 
     dataset = DataSet.SPLIT_MNIST,

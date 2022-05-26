@@ -13,12 +13,12 @@ if 'exp_commands' in os.getcwd():
 ########### EXPERIMENTS TO RUN ##############
 
 """
-Logging the number of dead neurons created by the different optimizers and the gradients applied to each of them. 
+Logging the number of dead neurons created by the different optimizers and the gradients applied to each of them. Uses CIFAR10 pixels as the manifold is more complex and more prone to result in dead neurons that can be analyzed. 
 """
 
 settings_for_all = dict(
-    epochs_to_train_for = 1000, #!!
-    dataset = DataSet.CIFAR10, #Cached_AlexNet_NoAugs_ImageNet32,
+    epochs_to_train_for = 1000, 
+    dataset = DataSet.CIFAR10, 
     classification=True,
     adversarial_attacks=False, 
     validation_neuron_logger = True,

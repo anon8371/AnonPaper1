@@ -17,8 +17,8 @@ Different SDM optimizers and their effects on the dead neuron problem.
 """
 
 settings_for_all = dict(
-    epochs_to_train_for = 2500, #!!
-    dataset = DataSet.SPLIT_Cached_ConvMixer_WTransforms_ImageNet32_CIFAR10, 
+    epochs_to_train_for = 2500, 
+    dataset = DataSet.SPLIT_Cached_ConvMixer_CIFAR10, 
     classification=True,
     adversarial_attacks=False, 
     epochs_per_dataset = 500,
@@ -33,9 +33,27 @@ exp_list = [
 
     dict( 
         model_style=ModelStyles.SDM, 
+        test_name="SDM_SGD", 
+        opt="SGD", 
+        lr=0.08, 
+        k_approach="GABA_SWITCH_ACT_BIN", 
+        load_path = "experiments/ConvMixer_ImageNet32_ImageNet32_ContLearnStarters/SDM_PosWeights_ContinualLearningPretrains_ConvMixer_WTransforms_ImageNet32_ImageNet32",
+    ), 
+
+    dict( 
+        model_style=ModelStyles.SDM, 
+        test_name="SDM_SGDM", 
+        opt="SGDM", 
+        lr=0.03, 
+        k_approach="GABA_SWITCH_ACT_BIN", 
+        load_path = "experiments/ConvMixer_ImageNet32_ImageNet32_ContLearnStarters/SDM_PosWeights_ContinualLearningPretrains_ConvMixer_WTransforms_ImageNet32_ImageNet32",
+    ), 
+
+    dict( 
+        model_style=ModelStyles.SDM, 
         test_name="SDM_RMSProp", 
         opt="RMSProp", 
-        lr=0.001, 
+        lr=0.0005, 
         k_approach="GABA_SWITCH_ACT_BIN", 
         load_path="experiments/ConvMixer_ImageNet32_ImageNet32_ContLearnStarters/SDM_RMSProp_ContinualLearningPretrains_ConvMixer_WTransforms_ImageNet32_ImageNet32", 
     ), 

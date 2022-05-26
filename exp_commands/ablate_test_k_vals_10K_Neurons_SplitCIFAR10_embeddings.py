@@ -18,9 +18,9 @@ if 'exp_commands' in os.getcwd():
 """
 
 settings_for_all = dict(
-    epochs_to_train_for = 2500, #!!
+    epochs_to_train_for = 2500, 
     epochs_per_dataset = 500,
-    dataset = DataSet.SPLIT_Cached_ConvMixer_WTransforms_ImageNet32_CIFAR10,
+    dataset = DataSet.SPLIT_Cached_ConvMixer_CIFAR10,
     classification=True,
     adversarial_attacks=False, 
     validation_neuron_logger = True,
