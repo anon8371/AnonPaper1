@@ -67,6 +67,8 @@ You can put these parameters into `test_runner.py` to run them and fill in `load
 
 If you want your model runs to be saved change `checkpoint_callback = False` on line 57 to `True`. Otherwise, only the continual learning models make while investigating continual learning will be saved out. 
 
+See the NISPA and FlyModel folders for the code from these papers that we made compatible with our datasets. For NISPA, the datasets need to be provided using `cp data/ NISPA/NISPA/Data` or redirecting the datapath inside NISPA.
+
 # Code Base Overview
 
 * **Folders**: 
