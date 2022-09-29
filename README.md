@@ -9,7 +9,7 @@ Follow these steps:
 ## 1. Set up a new Conda environment using: 
 
 ```
-conda create --name SDMContLearn python=3.8.3
+conda create --name SDMContLearn python=3.8
 conda activate SDMContLearn
 conda install pip
 ```
@@ -17,8 +17,8 @@ conda install pip
 ## 2. Clone this github repo and install its requirements: 
 
 ```
-git clone https://github.com/anon8371/SDMContinualLearning.git
-cd SDMContinualLearning
+git clone https://github.com/anon8371/AnonPaper1.git
+cd AnonPaper1
 pip install -r requirements.txt
 ```
 
