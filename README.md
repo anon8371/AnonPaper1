@@ -9,9 +9,10 @@ Follow these steps:
 ## 1. Set up a new Conda environment using: 
 
 ```
-conda create --name SDMContLearn python=3.8
+conda create --name SDMContLearn python=3.9
 conda activate SDMContLearn
 conda install pip
+pip install setuptools==59.5.0
 ```
 
 ## 2. Clone this github repo and install its requirements: 
@@ -38,8 +39,8 @@ cd ../../../../
 ## 4. Set up the datasets: 
 
 ```
-cd py_scripts
-python py_scripts/setup_cont_learning.py
+cd py_scripts/
+python setup_cont_learning_datasets.py
 cd ..
 ```
 

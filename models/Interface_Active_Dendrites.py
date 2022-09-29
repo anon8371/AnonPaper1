@@ -8,7 +8,7 @@ import pandas as pd
 from types import SimpleNamespace
 from models import BaseModel
 
-from nupic.research.frameworks.dendrites import DendriticMLP 
+#from nupic.research.frameworks.dendrites import DendriticMLP 
 
 class InterfActiveDendrites(BaseModel):
     def __init__(self, params: SimpleNamespace):
